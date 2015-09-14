@@ -1,0 +1,17 @@
+Sender conn-string:
+Endpoint=sb://nielsbevthub-ns.servicebus.windows.net/;SharedAccessKeyName=publishRule;SharedAccessKey=OGfHD26gsRsQmjCdLc8M4vXHAtJ9V1MTaYho7Dm2oC4=
+
+Receiver conn-string:
+Endpoint=sb://nielsbevthub-ns.servicebus.windows.net/;SharedAccessKeyName=subscribeRule;SharedAccessKey=pur8/T8IjCmZbt+xapq+x50MA2Y7Dufws3OqCAO10fs=
+
+EventHubName:
+nielsbevthub
+
+Storage Account Name:
+nielsbstorage
+
+Primary account storage key:
+PIheAUbXDPo/00yCvnfHaUG3TnPkVVOzGjlGT3mERFvtGTqI0sQD05myzjXJZGAZQgxHigZv4UentABGokEMcQ==
+
+Secondary account storage key:
+goCoPHAQPSHvUHKGHo6S8LSUnB8ImXgKQihTsvROKfbAxRCItyBy7rpuKEnNXtEXfe0nkm/uS4N4tPsW3xClew==

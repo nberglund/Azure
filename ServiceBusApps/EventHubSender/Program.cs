@@ -29,7 +29,7 @@ namespace EventHubSender
     static async Task SendingRandomMessages()
     {
       int nCount = 0;
-      var eventHubName = "eh1";
+      var eventHubName = "nielsbevthub";
       var eventHubConnectionString = GetEventHubConnectionString();
       var eventHubClient = EventHubClient.CreateFromConnectionString(eventHubConnectionString, eventHubName);
       while (nCount < 8)
@@ -41,7 +41,8 @@ namespace EventHubSender
           Console.WriteLine("{0} > Sending message: {1}", DateTime.Now.ToString(), message);
           var msg = new EventData(Encoding.UTF8.GetBytes(message));
           //msg.PartitionKey = "Hello";
-          await eventHubClient.SendAsync(msg);
+          //await eventHubClient.SendAsync(msg);
+          eventHubClient.Send(msg);
         }
         catch (AggregateException agexp)
         {

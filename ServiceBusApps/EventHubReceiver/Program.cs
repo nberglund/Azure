@@ -12,9 +12,11 @@ namespace EventHubReceiver
   class Program
   {
 
-    static string eventHubName = "eh1";
+    static string eventHubName = "nielsbevthub";
     static string hostName = "singleprocessor";
     static string consumerGroupName;
+    private static string acctName = "nielsbstorage";
+    private static string acctKey = "PIheAUbXDPo/00yCvnfHaUG3TnPkVVOzGjlGT3mERFvtGTqI0sQD05myzjXJZGAZQgxHigZv4UentABGokEMcQ==";
     static EventProcessorHost host;
 
     static void Main(string[] args)
@@ -106,7 +108,7 @@ namespace EventHubReceiver
 
     private static string GetStorageConnectionString()
     {
-      var connectionString = ConfigurationManager.AppSettings["StorageConnectionString"];
+      var connectionString = string.Format("DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1}", acctName, acctKey);
       if (string.IsNullOrEmpty(connectionString))
       {
         Console.ForegroundColor = ConsoleColor.Red;
