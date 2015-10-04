@@ -2,9 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Hadoop.Avro;
 
 namespace EventHubReceiver
 {
@@ -15,7 +17,7 @@ namespace EventHubReceiver
     Stopwatch checkpointStopWatch;
     public async Task CloseAsync(PartitionContext context, CloseReason reason)
     {
-      Console.WriteLine(string.Format("Processor Shutting Down.  Partition '{0}', Reason: '{1}'.", this.partitionContext.Lease.PartitionId, reason.ToString()));
+      Console.WriteLine(string.Format("Processor Shutting Down.  Partition '{0}', Reason: '{1}'. Offset: {2}", this.partitionContext.Lease.PartitionId, reason.ToString(), context.Lease.Offset));
       if (reason == CloseReason.Shutdown)
       {
         await context.CheckpointAsync();
@@ -41,13 +43,31 @@ namespace EventHubReceiver
 
       try
       {
+
+        var avroSerializer = AvroSerializer.Create<AvroWager>();
+
         foreach (EventData eventData in messages)
         {
-          string msg = Encoding.UTF8.GetString(eventData.GetBytes());
+          
+          //string msg = Encoding.UTF8.GetString(eventData.GetBytes());
+
+          using (var buff = new MemoryStream(eventData.GetBytes()))
+          {
+            buff.Position = 0;
+            var aw = avroSerializer.Deserialize(buff);
+
+
+          }
+
+
           string key = eventData.PartitionKey;
-                            
-          Console.WriteLine(string.Format("Message received.  Partition: '{0}', Device: '{1}', Offset: {2}, Data: '{3}'",
-              this.partitionContext.Lease.PartitionId, key, context.Lease.Offset, msg));
+                             
+          Console.WriteLine(string.Format("Message received.  Partition: '{0}', Device: '{1}', Offset: {2}",
+              this.partitionContext.Lease.PartitionId, key, context.Lease.Offset));
+
+          context.Lease.Offset = eventData.Offset;
+
+          //await context.CheckpointAsync();
         }
 
         //Call checkpoint every 5 minutes, so that worker can resume processing from the 5 minutes back if it restarts.

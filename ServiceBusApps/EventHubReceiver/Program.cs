@@ -21,8 +21,9 @@ namespace EventHubReceiver
 
     static void Main(string[] args)
     {
-      consumerGroupName = EventHubConsumerGroup.DefaultGroupName;
-      
+      //consumerGroupName = EventHubConsumerGroup.DefaultGroupName;
+      consumerGroupName = "wagergrp";
+
       StartReceiver().Wait();
 
       while (true)
@@ -53,8 +54,8 @@ namespace EventHubReceiver
                eventHubName,
                consumerGroupName,
                eventHubConnectionString,
-               storageConnectionString, 
-               eventHubName.ToLowerInvariant());
+               storageConnectionString); //, 
+               //eventHubName.ToLowerInvariant());
       try
       {
         
