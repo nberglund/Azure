@@ -49,15 +49,15 @@ namespace EventHubReceiver
         foreach (EventData eventData in messages)
         {
           
-          //string msg = Encoding.UTF8.GetString(eventData.GetBytes());
+          string msg = Encoding.UTF8.GetString(eventData.GetBytes());
 
-          using (var buff = new MemoryStream(eventData.GetBytes()))
-          {
-            buff.Position = 0;
-            var aw = avroSerializer.Deserialize(buff);
+          //using (var buff = new MemoryStream(eventData.GetBytes()))
+          //{
+          //  buff.Position = 0;
+          //  var aw = avroSerializer.Deserialize(buff);
 
 
-          }
+          //}
 
 
           string key = eventData.PartitionKey;

@@ -47,8 +47,8 @@ namespace EventHubReceiver
       var eventHubConnectionString = GetEventHubConnectionString();
       var storageConnectionString = GetStorageConnectionString();
 
-      
-            
+      ServiceBusEnvironment.SystemConnectivity.Mode = ConnectivityMode.Http;
+
       host = new EventProcessorHost(
                hostName,
                eventHubName,
